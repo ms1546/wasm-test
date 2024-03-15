@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: /wasm_calculator
+        working-directory: ./wasm_calculator
 
     steps:
     - uses: actions/checkout@v2
