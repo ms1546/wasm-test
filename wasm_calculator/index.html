@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WASM Calculator</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .calculator {
+            text-align: center;
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 1.2rem;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: green;
+        }
+    </style>
+    <script type="module">
+        import init, { calculate } from './pkg/wasm_calculator.js';
+
+        async function run() {
+            await init();
+
+            document.getElementById('calculate').addEventListener('click', () => {
+                const firstNum = parseFloat(document.getElementById('firstNum').value) || 0;
+                const secondNum = parseFloat(document.getElementById('secondNum').value) || 0;
+                const operation = document.getElementById('operation').value;
+                const result = calculate(firstNum, secondNum, operation);
+                document.getElementById('result').textContent = result;
+            });
+        }
+
+        run();
+    </script>
+</head>
+<body>
+    <div class="calculator">
+        <input id="firstNum" type="number" step="any" placeholder="First number">
+        <select id="operation">
+            <option value="add">+</option>
+            <option value="subtract">-</option>
+            <option value="multiply">*</option>
+            <option value="divide">/</option>
+        </select>
+        <input id="secondNum" type="number" step="any" placeholder="Second number">
+        <button id="calculate">Calculate</button>
+        <div id="result"></div>
+    </div>
+</body>
+</html>
