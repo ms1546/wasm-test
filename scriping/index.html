@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Go WASM Web Scraping</title>
+</head>
+<body>
+    <h1>Go WASM Web Scraping</h1>
+    <button onclick="startFetching()">Fetch Data</button>
+    <script src="wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        let mod, inst;
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+            mod = result.module;
+            inst = result.instance;
+            go.run(inst);
+        });
+
+        function startFetching() {
+            const urls = ["https://example.com", "https://golang.org", "https://github.com"];
+            fetchAll(urls, () => {
+                console.log("All fetch operations completed.");
+            });
+        }
+    </script>
+</body>
+</html>
